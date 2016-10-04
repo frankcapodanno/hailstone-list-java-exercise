@@ -7,26 +7,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 /**
- *
  * @author francesco@capodanno.click
  */
 public class JavaExperiments {
 
     static boolean is_a_number, is_terminate;
+    static List<List<Integer>> intMatrix; // final matrix created
+    static int n_rows =0; // total number of final matrix
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
        List<Integer> list = new ArrayList<>();
        Scanner user_input = new Scanner(System.in);
+       
+       intMatrix = new ArrayList<>();
+              
        is_a_number = false; is_terminate = false;
        int n = 0; // number
        
        System.out.println("Hailstone Numbers");
-       while (!is_a_number || !is_terminate)
+       
+       while (is_a_number || !is_terminate)
        {
         if (!list.isEmpty()) list.clear(); // clear the list if is the second time
          
@@ -35,13 +40,14 @@ public class JavaExperiments {
         if (!number.equals("exit"))
         {
          n = isValidReturnNumber(number);
+         if (n==0 && is_a_number) break; // protection 0 division
         } else
         {
           is_terminate = true; // facoltative
           break; 
         }
          
-       if (is_a_number == true)
+       if (is_a_number == true) // if is a number calcolate the result
         {
             while (n != 1)
             {
@@ -55,7 +61,10 @@ public class JavaExperiments {
                 
             }
             list.add(n);
-            System.out.println (list);
+            
+            System.out.println (" List: " + list);
+          
+           
             Integer max = 0;
         
             for (Integer x : list)
@@ -65,8 +74,17 @@ public class JavaExperiments {
     
             System.out.println("Maxiumum Integer in the list:" + max);
             System.out.println("Lenght of the list:" + list.size());
+            
+            addToFinalMatrix(list); // add the clone of this list 
+               
         }
+       
        }
+       
+       if (intMatrix.size() >= 1 ){ 
+           System.out.println("Final Matrix of all data:");
+           System.out.println(intMatrix);
+           }
 }
 
     private static Integer isValidReturnNumber(String number) {
@@ -85,4 +103,12 @@ public class JavaExperiments {
         
         return result;
     }
+
+    private static void addToFinalMatrix(List<Integer> list) {
+        
+        List<Integer> templist = new ArrayList<>();
+        for (Integer v : list) templist.add(v); // clone
+       
+          intMatrix.add(templist);
+       }
 }
